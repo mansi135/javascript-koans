@@ -115,11 +115,41 @@ describe("About Applying What We Have Learnt", function() {
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
-  /*
-  it("should find the largest prime factor of a composite number", function () {
   
+  it("should find the largest prime factor of a composite number", function () {
+
+    function isPrime(n){
+      
+      if(n<=1){
+        return false;
+      }
+
+      for(var j=2; j<n; j++){
+        if (n%j === 0){
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    var prime = function largestPrime(num){
+          if(isPrime(num)) { return "Please Enter a composite number first!!"};
+          for(var i=num-1; i>=2; i--){
+            if(num%i === 0 && isPrime(i)){
+              return i;
+            }
+          }
+          return undefined;
+        } 
+
+    expect(prime(11)).toEqual('Please Enter a composite number first!!');
+    expect(prime(10)).toBe(5);
+    expect(prime(1)).toEqual(undefined);
+
   });
 
+  /*
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
     
   });
