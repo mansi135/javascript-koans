@@ -134,14 +134,18 @@ describe("About Applying What We Have Learnt", function() {
   it("should find the largest prime factor of a composite number", function () {
 
     var prime = function largestPrime(num){
-          if(isPrime(num)) { return "Please Enter a composite number first!!"};
-          for(var i=num-1; i>=2; i--){
-            if(num%i === 0 && isPrime(i)){
+        if(isPrime(num)) { return "Please Enter a composite number first!!"; }
+        
+        var p =  _.range(num-1, 1, -1).filter(function(i) {
+              if(num%i === 0 && isPrime(i)){
               return i;
             }
-          }
-          return undefined;
-        } 
+          });
+
+        if (p.length !==0) return p[0];
+        else return undefined;
+
+      } 
 
     expect(prime(11)).toEqual('Please Enter a composite number first!!');
     expect(prime(10)).toBe(5);
@@ -149,10 +153,33 @@ describe("About Applying What We Have Learnt", function() {
 
   });
 
-  /*
+  
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
+
+    function isPalindrome(num) {
+      return num === Number(num.toString().split('').reverse().join('')) ;
+    }
+
+    var parry =[];
+
+    for(var i = 100; i < 1000; i++) {
+      for(var j = i; j < 1000; j++) {
+        if(isPalindrome(i*j)) {
+          parry.push(i*j);
+        }
+      }
+    }
+
+    var largest = _.reduce(parry,function(l,item) {
+      if (item > l) {
+        l = item;
+      }
+      return l;
+    },0);
+
+    expect(largest).toBe(906609);
     
-  }); */
+  }); 
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
       
@@ -169,6 +196,11 @@ describe("About Applying What We Have Learnt", function() {
             break;
           }
         } 
+
+     /*   _.range(1,n+1).forEach(function(i) {    //This implementation worked, but makes it very slow!
+          if (smallestNumb%i !== 0)
+            flag = false;
+        });   */                
         
         if(flag){
           return smallestNumb;
@@ -186,9 +218,24 @@ describe("About Applying What We Have Learnt", function() {
 
   }); 
 
-/*  it("should find the difference between the sum of the squares and the square of the sums", function () {
+  it("should find the difference between the sum of the squares and the square of the sums", function () {
+
+    function difference(n) {
+
+      var sumOfSquares = _.range(1,n+1).reduce(function(tot,item) {
+        return tot += item*item;
+      },0);
+
+      var sum = _.range(1,n+1).reduce(function(tot,item) {
+        return tot += item;
+      },0);
+
+      return sumOfSquares - (sum*sum) ;
+    }
+
+    expect(difference(10)).toBe(-2640);
     
-  });  */
+  });  
 
   it("should find the 10001st prime", function () {
       
